@@ -1,0 +1,117 @@
+[gd_scene load_steps=12 format=2]
+
+[ext_resource path="res://Player/Player.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Enemy.tscn" type="PackedScene" id=2]
+
+[sub_resource type="ProceduralSky" id=1]
+sky_top_color = Color( 0.65098, 0.945098, 0.647059, 1 )
+ground_bottom_color = Color( 0.184314, 0.482353, 0.780392, 1 )
+ground_horizon_color = Color( 0.768627, 0.741176, 0.717647, 1 )
+
+[sub_resource type="Environment" id=2]
+background_mode = 2
+background_sky = SubResource( 1 )
+ambient_light_color = Color( 1, 1, 1, 1 )
+
+[sub_resource type="NavigationMesh" id=3]
+vertices = PoolVector3Array( 0.996849, 2.5, 2.01148, 2.99685, 2.5, 1.01148, 1.99685, 2.5, 0.0114765, -1.00315, 2.5, 1.01148, 3.99685, 2.5, 3.01148, 1.99685, 2.5, 4.01148, 4.99685, 2.5, 5.01148, 0.996849, 2.5, 2.01148, -1.00315, 2.5, 1.01148, -1.00315, 2.5, 4.01148, 1.99685, 2.5, 4.01148, -1.00315, 2.5, 4.01148, -5.00315, 2.5, 5.01148, 4.99685, 2.5, 5.01148, 1.99685, 2.5, 4.01148, -1.00315, 2.5, 4.01148, -4.00315, 2.5, 2.01148, -5.00315, 2.5, 5.01148, 0.996849, 2.5, -2.98852, 1.99685, 2.5, 0.0114765, 2.99685, 2.5, 1.01148, 4.99685, 2.5, -4.98852, -5.00315, 2.5, -2.98852, -5.00315, 2.5, 5.01148, -4.00315, 2.5, 2.01148, -3.00315, 2.5, -1.98852, 4.99685, 2.5, -4.98852, 2.99685, 2.5, 1.01148, 3.99685, 2.5, 3.01148, -3.00315, 2.5, -1.98852, -4.00315, 2.5, 2.01148, -1.00315, 2.5, 1.01148, -1.00315, 2.5, -2.98852, 4.99685, 2.5, 5.01148, 4.99685, 2.5, -4.98852, 3.99685, 2.5, 3.01148, -3.00315, 2.5, -4.98852, -3.00315, 2.5, -1.98852, -1.00315, 2.5, -2.98852, -3.00315, 2.5, -4.98852, -1.00315, 2.5, -2.98852, 0.996849, 2.5, -2.98852, 4.99685, 2.5, -4.98852 )
+polygons = [ PoolIntArray( 1, 0, 2 ), PoolIntArray( 2, 0, 3 ), PoolIntArray( 6, 5, 4 ), PoolIntArray( 10, 9, 7 ), PoolIntArray( 7, 9, 8 ), PoolIntArray( 14, 13, 11 ), PoolIntArray( 11, 13, 12 ), PoolIntArray( 17, 16, 15 ), PoolIntArray( 19, 18, 20 ), PoolIntArray( 20, 18, 21 ), PoolIntArray( 25, 24, 22 ), PoolIntArray( 22, 24, 23 ), PoolIntArray( 28, 27, 26 ), PoolIntArray( 32, 31, 29 ), PoolIntArray( 29, 31, 30 ), PoolIntArray( 35, 34, 33 ), PoolIntArray( 38, 37, 36 ), PoolIntArray( 40, 39, 41 ), PoolIntArray( 41, 39, 42 ) ]
+cell/size = 1.0
+cell/height = 1.5
+agent/height = 3.0
+agent/radius = 1.0
+
+[sub_resource type="SpatialMaterial" id=4]
+albedo_color = Color( 0.12549, 0.117647, 0.117647, 1 )
+
+[sub_resource type="CubeMesh" id=5]
+material = SubResource( 4 )
+size = Vector3( 12, 1, 12 )
+
+[sub_resource type="BoxShape" id=6]
+
+[sub_resource type="SpatialMaterial" id=7]
+albedo_color = Color( 0.85098, 0.345098, 0.345098, 1 )
+
+[sub_resource type="CylinderMesh" id=8]
+material = SubResource( 7 )
+
+[sub_resource type="CylinderShape" id=9]
+
+[node name="Spatial" type="Spatial"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource( 2 )
+
+[node name="Camera" type="Camera" parent="."]
+transform = Transform( 1, 0, 0, 0, 0.777146, 0.62932, 0, -0.62932, 0.777146, -0.379272, 5.05934, 6.92243 )
+fov = 84.7162
+
+[node name="DirectionalLight" type="DirectionalLight" parent="."]
+transform = Transform( 0.999971, 0.00723099, -0.00227119, -0.0013762, 0.467902, 0.88378, 0.00745329, -0.883751, 0.467898, 0, 11.7546, 9.95776 )
+light_energy = 3.783
+
+[node name="Navigation" type="Navigation" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.04001, -4.86601 )
+
+[node name="NavigationMeshInstance" type="NavigationMeshInstance" parent="Navigation"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4.52804, 4.22736 )
+navmesh = SubResource( 3 )
+
+[node name="Floor" type="MeshInstance" parent="Navigation/NavigationMeshInstance"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00315142, 1.19209e-07, 0.0114765 )
+mesh = SubResource( 5 )
+material/0 = null
+
+[node name="StaticBody" type="StaticBody" parent="Navigation/NavigationMeshInstance/Floor"]
+transform = Transform( 5.00043, 0, 0, 0, 4.82313, 0, 0, 0, 4.96932, 0, 0, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Navigation/NavigationMeshInstance/Floor/StaticBody"]
+transform = Transform( 5.97842, 0, 0, 0, 0.500668, 0, 0, 0, 6.04404, 0, 0, 0 )
+shape = SubResource( 6 )
+
+[node name="Obstacle" type="MeshInstance" parent="Navigation/NavigationMeshInstance"]
+transform = Transform( 0.3, 0, 0, 0, 0.5, 0, 0, 0, 0.3, 0.027658, 1.00277, -0.995688 )
+mesh = SubResource( 8 )
+material/0 = null
+
+[node name="StaticBody" type="StaticBody" parent="Navigation/NavigationMeshInstance/Obstacle"]
+
+[node name="CollisionShape" type="CollisionShape" parent="Navigation/NavigationMeshInstance/Obstacle/StaticBody"]
+shape = SubResource( 9 )
+
+[node name="Obstacle2" type="MeshInstance" parent="Navigation/NavigationMeshInstance"]
+transform = Transform( 0.3, 0, 0, 0, 0.5, 0, 0, 0, 0.3, -2.05584, 1.00277, 2.60131 )
+mesh = SubResource( 8 )
+material/0 = null
+
+[node name="StaticBody" type="StaticBody" parent="Navigation/NavigationMeshInstance/Obstacle2"]
+
+[node name="CollisionShape" type="CollisionShape" parent="Navigation/NavigationMeshInstance/Obstacle2/StaticBody"]
+shape = SubResource( 9 )
+
+[node name="Obstacle3" type="MeshInstance" parent="Navigation/NavigationMeshInstance"]
+transform = Transform( 0.3, 0, 0, 0, 0.5, 0, 0, 0, 0.3, 2.56882, 1.00277, 2.57926 )
+mesh = SubResource( 8 )
+material/0 = null
+
+[node name="StaticBody" type="StaticBody" parent="Navigation/NavigationMeshInstance/Obstacle3"]
+
+[node name="CollisionShape" type="CollisionShape" parent="Navigation/NavigationMeshInstance/Obstacle3/StaticBody"]
+shape = SubResource( 9 )
+
+[node name="Obstacle4" type="MeshInstance" parent="Navigation/NavigationMeshInstance"]
+transform = Transform( 0.3, 0, 0, 0, 0.5, 0, 0, 0, 0.3, -3.39832, 1.00277, -3.44748 )
+mesh = SubResource( 8 )
+material/0 = null
+
+[node name="StaticBody" type="StaticBody" parent="Navigation/NavigationMeshInstance/Obstacle4"]
+
+[node name="CollisionShape" type="CollisionShape" parent="Navigation/NavigationMeshInstance/Obstacle4/StaticBody"]
+shape = SubResource( 9 )
+
+[node name="Enemy" parent="Navigation" instance=ExtResource( 2 )]
+transform = Transform( 0.578174, 0, 0, 0, 0.400599, 0, 0, 0, 0.569739, 0, -3.99267, 0 )
+
+[node name="Player" parent="." instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.41725, 0 )
